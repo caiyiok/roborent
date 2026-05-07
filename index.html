@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoboRent — Premium Humanoid Robot Rental</title>
+<meta name="description" content="Rent top humanoid robots from China's leading brands: Unitree, AgiBot, Expedition, Songyan, Magic Atom, Accelerate Evolution, ZQ Robotics and more.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0c10;--bg2:#0f1219;--bg3:#151a24;--bg4:#1c2333;
+  --accent:#00d4ff;--accent2:#7c3aed;--accent3:#06d6a0;
+  --text:#f0f4ff;--text2:#8b9ab8;--text3:#4a5568;
+  --border:#1e2a3a;--border2:#2d3f55;
+  --card:#111827;--card2:#1a2236;
+  --font:'DM Sans',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;overflow-x:hidden}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(10,12,16,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav-logo{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:var(--text);text-decoration:none}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--text2);text-decoration:none;font-size:14px;font-weight:500;cursor:pointer;transition:color 0.2s}
+.nav-links a:hover,.nav-links a.active{color:var(--accent)}
+.nav-right{display:flex;gap:12px;align-items:center}
+.btn{border:none;border-radius:8px;cursor:pointer;font-family:var(--font);font-weight:600;transition:all 0.2s;font-size:14px}
+.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border2);padding:8px 16px}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.btn-primary{background:var(--accent);color:#000;padding:8px 20px;border-radius:8px}
+.btn-primary:hover{opacity:0.85;transform:translateY(-1px)}
+.btn-danger{background:#ef4444;color:#fff;padding:8px 16px;border-radius:8px}
+.btn-danger:hover{opacity:0.85}
+.btn-success{background:var(--accent3);color:#000;padding:8px 16px}
+.btn-success:hover{opacity:0.85}
+.btn-sm{padding:6px 12px;font-size:13px}
+.btn-large{padding:14px 32px;font-size:16px;border-radius:10px;font-weight:700}
+
+/* PAGES */
+.page{display:none;min-height:calc(100vh - 64px)}
+.page.active{display:block}
+
+/* HERO */
+.hero{padding:100px 2rem 80px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(0,212,255,0.06) 0%,transparent 70%);pointer-events:none;z-index:0}
+.hero>*{position:relative;z-index:1}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);border-radius:100px;padding:6px 18px;font-size:12px;color:var(--accent);margin-bottom:28px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase}
+.hero h1{font-size:clamp(40px,7vw,80px);font-weight:800;line-height:1.0;letter-spacing:-3px;margin-bottom:24px}
+.hero h1 .hl{color:var(--accent)}
+.hero p{font-size:18px;color:var(--text2);max-width:600px;margin:0 auto 44px;line-height:1.7}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.hero-stats{display:flex;gap:48px;justify-content:center;margin-top:72px;padding-top:48px;border-top:1px solid var(--border);flex-wrap:wrap}
+.stat{text-align:center}
+.stat-num{font-size:36px;font-weight:800;color:var(--accent);letter-spacing:-1px}
+.stat-label{font-size:13px;color:var(--text2);margin-top:4px;font-weight:500}
+
+/* SECTION */
+.section{padding:80px 2rem;max-width:1200px;margin:0 auto}
+.section-header{margin-bottom:48px}
+.section-tag{font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--accent);text-transform:uppercase;margin-bottom:10px}
+.section-title{font-size:36px;font-weight:800;letter-spacing:-1.5px;margin-bottom:14px}
+.section-sub{font-size:16px;color:var(--text2);line-height:1.7;max-width:560px}
+
+/* FILTERS */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:36px}
+.filter-btn{background:var(--card);border:1px solid var(--border);color:var(--text2);padding:8px 20px;border-radius:100px;cursor:pointer;font-size:13px;font-weight:500;transition:all 0.2s;font-family:var(--font)}
+.filter-btn:hover,.filter-btn.active{background:rgba(0,212,255,0.1);border-color:var(--accent);color:var(--accent)}
+
+/* PRODUCT GRID */
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:24px}
+.product-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;cursor:pointer;transition:all 0.25s;position:relative}
+.product-card:hover{transform:translateY(-5px);border-color:var(--border2);box-shadow:0 24px 48px rgba(0,0,0,0.5)}
+.product-badge{position:absolute;top:14px;left:14px;z-index:2;background:var(--accent);color:#000;font-size:10px;font-weight:800;padding:4px 10px;border-radius:100px;letter-spacing:0.5px;text-transform:uppercase}
+.product-badge.hot{background:#f97316}
+.product-badge.new{background:var(--accent3);color:#000}
+.product-badge.flagship{background:var(--accent2)}
+.product-img{width:100%;height:210px;display:flex;align-items:center;justify-content:center;background:var(--bg3);font-size:90px;position:relative;overflow:hidden}
+.product-info{padding:22px}
+.product-brand{font-size:11px;font-weight:700;letter-spacing:0.8px;color:var(--accent2);text-transform:uppercase;margin-bottom:4px}
+.product-name{font-size:19px;font-weight:800;margin-bottom:8px;letter-spacing:-0.3px}
+.product-desc{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:18px}
+.product-specs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.spec-tag{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:11px;color:var(--text2);font-weight:500}
+.product-footer{display:flex;align-items:flex-end;justify-content:space-between}
+.price{font-size:24px;font-weight:800;color:var(--text);letter-spacing:-0.5px}
+.price span{font-size:13px;font-weight:400;color:var(--text2)}
+.price-day{font-size:12px;color:var(--text2);margin-top:3px}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:200;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity 0.2s}
+.modal-overlay.show{opacity:1;pointer-events:all}
+.modal{background:var(--card2);border:1px solid var(--border2);border-radius:20px;max-width:720px;width:100%;max-height:90vh;overflow-y:auto;padding:36px;position:relative}
+.modal-close{position:absolute;top:18px;right:18px;background:var(--bg3);border:1px solid var(--border);color:var(--text2);width:34px;height:34px;border-radius:8px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;font-family:var(--font)}
+.modal-close:hover{color:var(--text);border-color:var(--border2)}
+.modal-img{width:100%;height:260px;background:var(--bg3);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:110px;margin-bottom:28px}
+.modal-brand{font-size:11px;font-weight:700;letter-spacing:0.8px;color:var(--accent2);text-transform:uppercase;margin-bottom:6px}
+.modal-title{font-size:30px;font-weight:800;letter-spacing:-1px;margin-bottom:10px}
+.modal-price-row{display:flex;gap:16px;margin:24px 0;flex-wrap:wrap}
+.price-box{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:18px 22px;flex:1;min-width:140px}
+.price-box .label{font-size:12px;color:var(--text2);margin-bottom:4px;font-weight:500}
+.price-box .amount{font-size:26px;font-weight:800;color:var(--accent)}
+.price-box .unit{font-size:12px;color:var(--text2);margin-top:2px}
+.spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+.spec-item{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px 18px}
+.spec-item .sk{font-size:12px;color:var(--text2);margin-bottom:3px;font-weight:500}
+.spec-item .sv{font-size:15px;font-weight:700}
+
+/* FORMS */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group label{font-size:13px;color:var(--text2);font-weight:600;letter-spacing:0.2px}
+.form-group input,.form-group select,.form-group textarea{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:11px 14px;color:var(--text);font-family:var(--font);font-size:14px;outline:none;transition:border-color 0.2s;width:100%}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--accent)}
+.form-group select option{background:var(--bg2)}
+.form-group textarea{resize:vertical}
+
+/* ADMIN */
+.admin-layout{display:grid;grid-template-columns:230px 1fr;min-height:calc(100vh - 64px)}
+.admin-sidebar{background:var(--bg2);border-right:1px solid var(--border);padding:28px 0;position:relative}
+.admin-nav-item{display:flex;align-items:center;gap:10px;padding:11px 22px;cursor:pointer;font-size:14px;color:var(--text2);transition:all 0.2s;font-weight:500;border-left:2px solid transparent}
+.admin-nav-item:hover{color:var(--text);background:rgba(255,255,255,0.03)}
+.admin-nav-item.active{background:rgba(0,212,255,0.06);color:var(--accent);border-left-color:var(--accent)}
+.admin-content{padding:36px;overflow-y:auto}
+.admin-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px}
+.admin-title{font-size:26px;font-weight:800;letter-spacing:-0.5px}
+.admin-product-row{display:flex;align-items:center;gap:16px;padding:18px;background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:12px;flex-wrap:wrap}
+.admin-product-thumb{width:64px;height:64px;background:var(--bg3);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:38px;flex-shrink:0}
+.admin-product-info{flex:1;min-width:180px}
+.admin-product-name{font-weight:700;font-size:15px;margin-bottom:3px}
+.admin-product-meta{font-size:13px;color:var(--text2)}
+.admin-actions{display:flex;gap:8px;flex-shrink:0}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px}
+.stat-card .num{font-size:40px;font-weight:800;letter-spacing:-1.5px;color:var(--accent);margin-bottom:6px}
+.stat-card .lbl{font-size:14px;color:var(--text2);font-weight:500}
+.tag{display:inline-flex;align-items:center;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:0.3px}
+.tag-active{background:rgba(6,214,160,0.12);color:var(--accent3)}
+.tag-inactive{background:rgba(239,68,68,0.1);color:#ef4444}
+.divider{height:1px;background:var(--border);margin:24px 0}
+.alert{padding:14px 18px;border-radius:10px;font-size:14px;margin-bottom:18px;font-weight:500}
+.alert-success{background:rgba(6,214,160,0.1);border:1px solid rgba(6,214,160,0.3);color:var(--accent3)}
+.alert-error{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:#ef4444}
+
+/* FEATURES GRID */
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:28px}
+.feature-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:32px 28px}
+.feature-icon{font-size:44px;margin-bottom:18px}
+.feature-title{font-size:17px;font-weight:700;margin-bottom:10px}
+.feature-desc{font-size:14px;color:var(--text2);line-height:1.7}
+
+/* BRAND CARDS */
+.brand-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;transition:border-color 0.2s}
+.brand-card:hover{border-color:var(--border2)}
+
+/* FOOTER */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:48px 2rem 32px;margin-top:40px}
+.footer-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px}
+.footer-brand{font-size:20px;font-weight:800;margin-bottom:12px}
+.footer-brand span{color:var(--accent)}
+.footer-desc{font-size:14px;color:var(--text2);line-height:1.7}
+.footer-col h4{font-size:13px;font-weight:700;letter-spacing:0.5px;color:var(--text2);text-transform:uppercase;margin-bottom:16px}
+.footer-col a{display:block;font-size:14px;color:var(--text2);text-decoration:none;margin-bottom:10px;cursor:pointer;transition:color 0.2s}
+.footer-col a:hover{color:var(--accent)}
+.footer-bottom{max-width:1200px;margin:40px auto 0;padding-top:24px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-size:13px;color:var(--text3)}
+
+@media(max-width:768px){
+  .nav-links{display:none}
+  .footer-inner{grid-template-columns:1fr 1fr}
+  .form-row{grid-template-columns:1fr}
+  .admin-layout{grid-template-columns:1fr}
+  .admin-sidebar{display:none}
+  .hero h1{letter-spacing:-1px}
+  .spec-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#" onclick="showPage('home',null)">ROBO<span>RENT</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a class="active" onclick="showPage('home',this)">Home</a></li>
+    <li><a onclick="showPage('products',this)">Products</a></li>
+    <li><a onclick="showPage('brands',this)">Brands</a></li>
+    <li><a onclick="showPage('contact',this)">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="btn btn-ghost" onclick="showPage('admin',null)" style="font-size:13px">Admin Panel</button>
+    <button class="btn btn-primary" onclick="showPage('products',null);setTimeout(()=>document.getElementById('inquiryModal').classList.add('show'),200)">Rent Now</button>
+  </div>
+</nav>
+
+<!-- ═══ HOME PAGE ═══ -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-tag">🤖 China's Premier Humanoid Robot Rental Platform</div>
+    <h1>Rent the World's<br>Most Advanced<br><span class="hl">Humanoid Robots</span></h1>
+    <p>Access China's top humanoid robots — Unitree, AgiBot, Expedition, Songyan and more — with flexible daily or monthly rental plans, full technical support included.</p>
+    <div class="hero-btns">
+      <button class="btn btn-primary btn-large" onclick="showPage('products',null)">Browse Catalog</button>
+      <button class="btn btn-ghost btn-large" onclick="showPage('contact',null)">Get a Custom Quote</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num" id="statBrands">8+</div><div class="stat-label">Partner Brands</div></div>
+      <div class="stat"><div class="stat-num" id="statUnits">50+</div><div class="stat-label">Units Available</div></div>
+      <div class="stat"><div class="stat-num">7×24</div><div class="stat-label">Tech Support</div></div>
+      <div class="stat"><div class="stat-num">30-Day</div><div class="stat-label">Min. Rental Period</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-tag">Featured Products</div>
+      <div class="section-title">Top Rental Models</div>
+    </div>
+    <div class="product-grid" id="featuredGrid"></div>
+    <div style="text-align:center;margin-top:40px">
+      <button class="btn btn-ghost btn-large" onclick="showPage('products',null)">View All Products →</button>
+    </div>
+  </div>
+
+  <div style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:80px 2rem;margin:0">
+    <div style="max-width:1200px;margin:0 auto">
+      <div class="section-header" style="text-align:center;margin-bottom:56px">
+        <div class="section-tag">Why Choose Us</div>
+        <div class="section-title" style="margin:0 auto">Everything You Need, Nothing You Don't</div>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🏭</div>
+          <div class="feature-title">Authorized Channels</div>
+          <div class="feature-desc">Direct partnerships with all major manufacturers. Every unit is genuine, certified, and under official warranty.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚙️</div>
+          <div class="feature-title">Pre-delivery Setup</div>
+          <div class="feature-desc">Full calibration and testing before delivery. We provide on-site training and comprehensive technical documentation.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🛡️</div>
+          <div class="feature-title">Full Insurance Coverage</div>
+          <div class="feature-desc">Complete insurance for the entire rental period. Replacement unit delivered within 48 hours of any fault.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📦</div>
+          <div class="feature-title">Flexible Terms</div>
+          <div class="feature-desc">Daily, weekly, monthly, or annual pricing. Volume discounts available for multi-unit or long-term contracts.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="text-align:center">
+    <div class="section-tag">Ready to Deploy?</div>
+    <div class="section-title">Start Your Rental Today</div>
+    <p style="color:var(--text2);font-size:16px;max-width:500px;margin:0 auto 36px;line-height:1.7">From exhibition demos to industrial trials — we have the right robot for your use case.</p>
+    <div class="hero-btns">
+      <button class="btn btn-primary btn-large" onclick="showPage('contact',null)">Request a Quote</button>
+      <button class="btn btn-ghost btn-large" onclick="showPage('products',null)">Browse Products</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PRODUCTS PAGE ═══ -->
+<div class="page" id="page-products">
+  <div class="section" style="padding-top:50px">
+    <div class="section-header">
+      <div class="section-tag">Product Catalog</div>
+      <div class="section-title">All Robot Models</div>
+      <div class="section-sub">Covering industrial, service, exhibition, and research applications</div>
+    </div>
+    <div class="filters" id="brandFilters">
+      <button class="filter-btn active" onclick="filterProducts('all',this)">All Brands</button>
+    </div>
+    <div class="product-grid" id="productGrid"></div>
+  </div>
+</div>
+
+<!-- ═══ BRANDS PAGE ═══ -->
+<div class="page" id="page-brands">
+  <div class="section" style="padding-top:50px">
+    <div class="section-header">
+      <div class="section-tag">Partner Brands</div>
+      <div class="section-title">Our Robot Brand Portfolio</div>
+      <div class="section-sub">Curated partnerships with China's leading humanoid robot manufacturers</div>
+    </div>
+    <div id="brandGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:22px"></div>
+  </div>
+</div>
+
+<!-- ═══ CONTACT PAGE ═══ -->
+<div class="page" id="page-contact">
+  <div class="section" style="max-width:760px;padding-top:50px">
+    <div class="section-header">
+      <div class="section-tag">Get in Touch</div>
+      <div class="section-title">Request a Rental Quote</div>
+      <div class="section-sub">Fill in your requirements and we'll get back to you with a tailored proposal within 24 hours.</div>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:18px;padding:36px">
+      <div id="contactAlert"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Company Name</label><input id="cname" type="text" placeholder="Your company name"></div>
+        <div class="form-group"><label>Contact Person</label><input id="ccontact" type="text" placeholder="Full name"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Phone Number</label><input id="cphone" type="tel" placeholder="International format"></div>
+        <div class="form-group"><label>Email Address</label><input id="cemail" type="email" placeholder="Business email"></div>
+      </div>
+      <div class="form-group" style="margin-bottom:14px">
+        <label>Robot Model of Interest</label>
+        <select id="cmodel"><option value="">Select a model...</option></select>
+      </div>
+      <div class="form-group" style="margin-bottom:14px">
+        <label>Rental Duration</label>
+        <select id="cperiod">
+          <option>1 Month</option><option>3 Months</option><option>6 Months</option><option>12 Months</option><option>Long-term Partnership</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-bottom:28px">
+        <label>Use Case Description</label>
+        <textarea id="cscene" rows="4" placeholder="Describe your intended use case, required quantity, deployment environment, etc."></textarea>
+      </div>
+      <button class="btn btn-primary" style="width:100%;padding:15px;font-size:16px;border-radius:10px;font-weight:800" onclick="submitContact()">Submit Inquiry</button>
+      <p style="font-size:12px;color:var(--text2);text-align:center;margin-top:14px">We typically respond within 24 hours during business days (Mon–Sat).</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ADMIN PAGE ═══ -->
+<div class="page" id="page-admin">
+  <div class="admin-layout">
+    <div class="admin-sidebar">
+      <div style="padding:0 22px 22px;border-bottom:1px solid var(--border);margin-bottom:16px">
+        <div style="font-size:12px;font-weight:600;color:var(--text3);margin-bottom:4px;letter-spacing:0.5px">ADMIN PANEL</div>
+        <div style="font-size:18px;font-weight:800;color:var(--accent)">ROBORENT</div>
+      </div>
+      <div class="admin-nav-item active" onclick="showAdmin('dashboard',this)">📊 Dashboard</div>
+      <div class="admin-nav-item" onclick="showAdmin('products',this)">🤖 Products</div>
+      <div class="admin-nav-item" onclick="showAdmin('addProduct',this)">➕ Add Product</div>
+      <div class="admin-nav-item" onclick="showAdmin('brands',this)">🏷️ Brands</div>
+      <div class="admin-nav-item" onclick="showAdmin('inquiries',this)">📩 Inquiries</div>
+      <div style="position:absolute;bottom:24px;padding:0 22px;width:230px">
+        <button class="btn btn-ghost" style="width:100%;font-size:13px" onclick="showPage('home',null)">← Back to Website</button>
+      </div>
+    </div>
+    <div class="admin-content" id="adminContent"></div>
+  </div>
+</div>
+
+<!-- ═══ PRODUCT DETAIL MODAL ═══ -->
+<div class="modal-overlay" id="productModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('productModal')">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<!-- ═══ INQUIRY MODAL ═══ -->
+<div class="modal-overlay" id="inquiryModal">
+  <div class="modal" style="max-width:560px">
+    <button class="modal-close" onclick="closeModal('inquiryModal')">✕</button>
+    <div id="inquiryContent">
+      <div style="font-size:22px;font-weight:800;margin-bottom:6px;letter-spacing:-0.5px">Request a Rental Quote</div>
+      <p style="font-size:14px;color:var(--text2);margin-bottom:24px">Fill in your details and we'll be in touch within 24 hours.</p>
+      <div id="inquiryAlert"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Your Name</label><input id="iq_name" type="text" placeholder="Full name"></div>
+        <div class="form-group"><label>Phone / Email</label><input id="iq_phone" type="text" placeholder="Contact info"></div>
+      </div>
+      <div class="form-group" style="margin-bottom:14px">
+        <label>Robot Model</label>
+        <select id="iq_model"><option value="">Select a model...</option></select>
+      </div>
+      <div class="form-group" style="margin-bottom:14px">
+        <label>Quantity</label>
+        <input id="iq_qty" type="number" min="1" value="1">
+      </div>
+      <div class="form-group" style="margin-bottom:28px">
+        <label>Additional Notes</label>
+        <textarea id="iq_note" rows="3" placeholder="Deployment timeline, special requirements..."></textarea>
+      </div>
+      <button class="btn btn-primary" style="width:100%;padding:14px;font-size:15px;border-radius:10px;font-weight:800" onclick="submitInquiry()">Send Inquiry</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer id="mainFooter">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">ROBO<span>RENT</span></div>
+      <p class="footer-desc">China's leading humanoid robot rental platform. Connecting businesses with the world's most advanced robots for demos, R&D, and industrial deployment.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Products</h4>
+      <a onclick="showPage('products',null)">All Models</a>
+      <a onclick="filterProducts('Unitree',null);showPage('products',null)">Unitree</a>
+      <a onclick="filterProducts('AgiBot',null);showPage('products',null)">AgiBot</a>
+      <a onclick="filterProducts('Expedition',null);showPage('products',null)">Expedition</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a onclick="showPage('brands',null)">Our Brands</a>
+      <a onclick="showPage('contact',null)">Contact Us</a>
+      <a onclick="showPage('contact',null)">Get a Quote</a>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <a href="mailto:info@roborent.com">info@roborent.com</a>
+      <a href="tel:+86-400-000-0000">+86 400-000-0000</a>
+      <a>Mon – Sat  9:00 – 18:00 CST</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 RoboRent. All rights reserved.</p>
+    <p>Humanoid Robot Rental · Industrial AI Solutions</p>
+  </div>
+</footer>
+
+<script>
+// ══════════════════════════════════════════
+//  DATA STORE
+// ══════════════════════════════════════════
+let appData = {
+  products:[
+    {id:1,brand:'Unitree',model:'U2',name:'Unitree U2',desc:'Unitree\'s flagship humanoid robot with 27 degrees of freedom, exceptional agility, and powerful onboard compute. Ideal for industrial inspection and live demonstrations.',price_day:3800,price_month:88000,specs:{Height:'~180cm',Weight:'~65kg',DoF:'27',Payload:'≥15kg',Battery:'~2hrs',Protection:'IP54'},emoji:'🦾',badge:'Popular',status:true},
+    {id:2,brand:'AgiBot',model:'Lingxi X2',name:'AgiBot Lingxi X2',desc:'AgiBot\'s dual-arm collaboration flagship with 43 degrees of freedom and high-precision manipulation. Widely used in flexible manufacturing and research.',price_day:4200,price_month:96000,specs:{Height:'~175cm',Weight:'~60kg',DoF:'43',Payload:'3kg×2 arms',Battery:'~1.5hrs',Protection:'IP54'},emoji:'🤖',badge:'New',status:true},
+    {id:3,brand:'Expedition',model:'A2',name:'Expedition A2',desc:'Lightweight design for rapid deployment. Perfect for retail, exhibitions, and public service scenarios. Outstanding value-to-performance ratio.',price_day:2200,price_month:52000,specs:{Height:'~165cm',Weight:'~45kg',DoF:'22',Payload:'≥5kg',Battery:'~3hrs',Protection:'IP52'},emoji:'⚡',badge:'',status:true},
+    {id:4,brand:'Expedition',model:'A3',name:'Expedition A3',desc:'Upgraded motion system with enhanced power output and advanced motion planning. Built for outdoor patrol, site inspection, and complex terrain navigation.',price_day:2800,price_month:65000,specs:{Height:'~170cm',Weight:'~55kg',DoF:'25',Payload:'≥10kg',Battery:'~2.5hrs',Protection:'IP55'},emoji:'⚡',badge:'',status:true},
+    {id:5,brand:'Songyan',model:'SY-H1',name:'Songyan SY-H1',desc:'Purpose-built for heavy industrial applications. High-rigidity joint design, IP65 protection, ideal for hazardous environments and heavy-duty material handling.',price_day:3500,price_month:80000,specs:{Height:'~185cm',Weight:'~75kg',DoF:'24',Payload:'≥20kg',Battery:'~2hrs',Protection:'IP65'},emoji:'🏗️',badge:'',status:true},
+    {id:6,brand:'Magic Atom',model:'MagBot Pro',name:'Magic Atom MagBot Pro',desc:'Pioneering magnetic-drive joint technology for fluid, lifelike motion. The preferred choice for luxury brand activations and premium event experiences.',price_day:4500,price_month:105000,specs:{Height:'~178cm',Weight:'~58kg',DoF:'30',Payload:'≥8kg',Battery:'~2hrs',Protection:'IP53'},emoji:'🪄',badge:'Featured',status:true},
+    {id:7,brand:'Accel Evolution',model:'EVO-X1',name:'Accel Evolution EVO-X1',desc:'Next-gen AI-driven humanoid with end-to-end reinforcement learning. Best-in-class autonomous task planning for complex unstructured environments.',price_day:5000,price_month:118000,specs:{Height:'~180cm',Weight:'~62kg',DoF:'32',Payload:'≥12kg',Battery:'~1.5hrs',Protection:'IP54'},emoji:'🚀',badge:'Flagship',status:true},
+    {id:8,brand:'ZQ Robotics',model:'ZQ-Alpha',name:'ZQ Robotics ZQ-Alpha',desc:'One of China\'s first mass-produced humanoid robots. Optimized for reliability and cost-efficiency — the top choice for large-scale multi-unit deployments.',price_day:2500,price_month:58000,specs:{Height:'~172cm',Weight:'~55kg',DoF:'22',Payload:'≥8kg',Battery:'~2.5hrs',Protection:'IP52'},emoji:'💪',badge:'',status:true},
+  ],
+  brands:[
+    {name:'Unitree',fullname:'Unitree Robotics (宇树科技)',desc:'World-renowned for high-performance quadruped and humanoid robots. The Unitree U2 is their flagship full-size humanoid platform with cutting-edge motion intelligence.',emoji:'🦾'},
+    {name:'AgiBot',fullname:'AgiBot (智元机器人)',desc:'Specialists in dual-arm collaborative robotics. The Lingxi X2 features 43 DoF and excels in precise manipulation tasks within flexible manufacturing environments.',emoji:'🤖'},
+    {name:'Expedition',fullname:'Expedition Robotics (远征机器人)',desc:'Delivers two commercial humanoid models (A2 & A3) that balance performance with accessibility. Lightweight designs enable fast, low-friction deployment.',emoji:'⚡'},
+    {name:'Songyan',fullname:'Songyan Robotics (松延动力)',desc:'Focused on heavy-duty industrial humanoids. The SY-H1 leads the market with IP65 protection and 20kg+ payload, engineered for extreme environments.',emoji:'🏗️'},
+    {name:'Magic Atom',fullname:'Magic Atom (魔法原子)',desc:'Differentiates through proprietary magnetic-drive joint technology, producing remarkably human-like movement. The preferred platform for high-profile brand experiences.',emoji:'🪄'},
+    {name:'Accel Evolution',fullname:'Accel Evolution (加速进化)',desc:'AI-first approach to humanoid robotics. The EVO-X1 supports end-to-end reinforcement learning and autonomous planning — a leading choice for AI research.',emoji:'🚀'},
+    {name:'ZQ Robotics',fullname:'ZQ Robotics (众擎机器人)',desc:'Pioneered mass production of commercial humanoid robots in China. The ZQ-Alpha is among the first humanoids to achieve volume delivery to enterprise customers.',emoji:'💪'},
+    {name:'Other',fullname:'Additional Brands',desc:'We continuously expand our catalog with emerging domestic and international humanoid robot manufacturers to keep our offering at the cutting edge.',emoji:'🤖'},
+  ],
+  inquiries:[],
+  nextId:9,
+};
+
+let editingId = null;
+
+// ══════════════════════════════════════════
+//  PAGE ROUTING
+// ══════════════════════════════════════════
+function showPage(id, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  if (el) el.classList.add('active');
+  document.getElementById('mainFooter').style.display = (id === 'admin') ? 'none' : 'block';
+  if (id === 'home') { renderFeatured(); updateStats(); }
+  if (id === 'products') renderProducts('all');
+  if (id === 'brands') renderBrands();
+  if (id === 'contact') renderContactSelects();
+  if (id === 'admin') { showAdmin('dashboard', null); }
+  window.scrollTo(0, 0);
+}
+
+function updateStats() {
+  document.getElementById('statBrands').textContent = appData.brands.length + '+';
+  document.getElementById('statUnits').textContent = appData.products.filter(p => p.status).length + '+';
+}
+
+// ══════════════════════════════════════════
+//  PRODUCT RENDERING
+// ══════════════════════════════════════════
+function renderFeatured() {
+  const g = document.getElementById('featuredGrid');
+  g.innerHTML = '';
+  appData.products.filter(p => p.status).slice(0, 4).forEach(p => g.appendChild(createProductCard(p)));
+}
+
+function renderProducts(brand) {
+  const g = document.getElementById('productGrid');
+  g.innerHTML = '';
+  const list = brand === 'all' ? appData.products.filter(p => p.status) : appData.products.filter(p => p.status && p.brand === brand);
+  list.forEach(p => g.appendChild(createProductCard(p)));
+  const fb = document.getElementById('brandFilters');
+  fb.innerHTML = '<button class="filter-btn ' + (brand === 'all' ? 'active' : '') + '" onclick="filterProducts(\'all\',this)">All Brands</button>';
+  [...new Set(appData.products.map(p => p.brand))].forEach(b => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn' + (brand === b ? ' active' : '');
+    btn.textContent = b;
+    btn.onclick = function() { filterProducts(b, this); };
+    fb.appendChild(btn);
+  });
+}
+
+function filterProducts(brand, el) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  if (el) el.classList.add('active');
+  renderProducts(brand);
+}
+
+function badgeClass(badge) {
+  const map = { 'Popular': 'hot', 'New': 'new', 'Featured': 'new', 'Flagship': 'flagship' };
+  return map[badge] || '';
+}
+
+function createProductCard(p) {
+  const div = document.createElement('div');
+  div.className = 'product-card';
+  div.onclick = () => showProductModal(p.id);
+  div.innerHTML = `
+    ${p.badge ? `<div class="product-badge ${badgeClass(p.badge)}">${p.badge}</div>` : ''}
+    <div class="product-img">${p.emoji || '🤖'}</div>
+    <div class="product-info">
+      <div class="product-brand">${p.brand}</div>
+      <div class="product-name">${p.name}</div>
+      <div class="product-desc">${p.desc.slice(0, 80)}...</div>
+      <div class="product-specs">
+        <span class="spec-tag">${p.specs['DoF'] || '—'} DoF</span>
+        <span class="spec-tag">Payload ${p.specs['Payload'] || '—'}</span>
+        <span class="spec-tag">${p.specs['Protection'] || '—'}</span>
+      </div>
+      <div class="product-footer">
+        <div>
+          <div class="price">¥${p.price_day.toLocaleString()}<span>/day</span></div>
+          <div class="price-day">Monthly: ¥${p.price_month.toLocaleString()}</div>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();openInquiry(${p.id})">Inquire</button>
+      </div>
+    </div>`;
+  return div;
+}
+
+// ══════════════════════════════════════════
+//  BRANDS PAGE
+// ══════════════════════════════════════════
+function renderBrands() {
+  const g = document.getElementById('brandGrid');
+  g.innerHTML = '';
+  appData.brands.forEach(b => {
+    const count = appData.products.filter(p => p.brand === b.name && p.status).length;
+    const div = document.createElement('div');
+    div.className = 'brand-card';
+    div.innerHTML = `
+      <div style="font-size:52px;margin-bottom:14px">${b.emoji}</div>
+      <div style="font-weight:800;font-size:19px;margin-bottom:4px">${b.name}</div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:14px;font-weight:500">${b.fullname}</div>
+      <div style="font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:18px">${b.desc}</div>
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <span style="font-size:13px;color:var(--accent);font-weight:600">${count} model${count !== 1 ? 's' : ''} available</span>
+        ${count > 0 ? `<button class="btn btn-ghost btn-sm" onclick="filterProducts('${b.name}',null);showPage('products',null)">View →</button>` : ''}
+      </div>`;
+    g.appendChild(div);
+  });
+}
+
+// ══════════════════════════════════════════
+//  MODALS
+// ══════════════════════════════════════════
+function showProductModal(id) {
+  const p = appData.products.find(x => x.id === id);
+  if (!p) return;
+  const c = document.getElementById('modalContent');
+  c.innerHTML = `
+    <div class="modal-img">${p.emoji || '🤖'}</div>
+    <div class="modal-brand">${p.brand}</div>
+    <div class="modal-title">${p.name}</div>
+    <p style="color:var(--text2);font-size:14px;line-height:1.7;margin-bottom:4px">${p.desc}</p>
+    <div class="modal-price-row">
+      <div class="price-box"><div class="label">Daily Rate</div><div class="amount">¥${p.price_day.toLocaleString()}</div><div class="unit">per day</div></div>
+      <div class="price-box"><div class="label">Monthly Rate</div><div class="amount">¥${p.price_month.toLocaleString()}</div><div class="unit">per month</div></div>
+    </div>
+    <div style="font-size:14px;font-weight:700;margin-bottom:14px;color:var(--text2);letter-spacing:0.3px;text-transform:uppercase;font-size:12px">Technical Specifications</div>
+    <div class="spec-grid">
+      ${Object.entries(p.specs).map(([k, v]) => `<div class="spec-item"><div class="sk">${k}</div><div class="sv">${v}</div></div>`).join('')}
+    </div>
+    <div style="display:flex;gap:12px;margin-top:28px">
+      <button class="btn btn-primary btn-large" style="flex:1" onclick="openInquiry(${p.id})">Request Rental Quote</button>
+      <button class="btn btn-ghost" style="padding:14px 22px" onclick="closeModal('productModal')">Close</button>
+    </div>`;
+  document.getElementById('productModal').classList.add('show');
+}
+
+function openInquiry(id) {
+  closeModal('productModal');
+  renderInquirySelects(id);
+  document.getElementById('inquiryModal').classList.add('show');
+}
+
+function renderInquirySelects(selectedId) {
+  const sel = document.getElementById('iq_model');
+  sel.innerHTML = '<option value="">Select a model...</option>';
+  appData.products.filter(p => p.status).forEach(p => {
+    const opt = document.createElement('option');
+    opt.value = p.id; opt.textContent = p.name;
+    if (p.id === selectedId) opt.selected = true;
+    sel.appendChild(opt);
+  });
+}
+
+function renderContactSelects() {
+  const sel = document.getElementById('cmodel');
+  sel.innerHTML = '<option value="">Select a model...</option>';
+  appData.products.filter(p => p.status).forEach(p => {
+    const opt = document.createElement('option');
+    opt.value = p.id; opt.textContent = p.name;
+    sel.appendChild(opt);
+  });
+}
+
+function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+
+// ══════════════════════════════════════════
+//  FORM SUBMISSIONS
+// ══════════════════════════════════════════
+function submitContact() {
+  const name = document.getElementById('cname').value.trim();
+  const contact = document.getElementById('ccontact').value.trim();
+  if (!name || !contact) {
+    document.getElementById('contactAlert').innerHTML = '<div class="alert alert-error">Please fill in your company name and contact person.</div>';
+    return;
+  }
+  appData.inquiries.push({
+    id: Date.now(), company: name, contact,
+    phone: document.getElementById('cphone').value,
+    email: document.getElementById('cemail').value,
+    model: document.getElementById('cmodel').value,
+    period: document.getElementById('cperiod').value,
+    scene: document.getElementById('cscene').value,
+    time: new Date().toLocaleString('en-US'), status: 'Pending'
+  });
+  document.getElementById('contactAlert').innerHTML = '<div class="alert alert-success">✅ Inquiry submitted! We\'ll respond within 24 hours.</div>';
+  setTimeout(() => document.getElementById('contactAlert').innerHTML = '', 5000);
+}
+
+function submitInquiry() {
+  const name = document.getElementById('iq_name').value.trim();
+  const phone = document.getElementById('iq_phone').value.trim();
+  const model = document.getElementById('iq_model').value;
+  if (!name || !phone || !model) {
+    document.getElementById('inquiryAlert').innerHTML = '<div class="alert alert-error">Please complete all required fields.</div>';
+    return;
+  }
+  const p = appData.products.find(x => x.id == model);
+  appData.inquiries.push({
+    id: Date.now(), company: name, contact: name, phone,
+    model: p ? p.name : model,
+    qty: document.getElementById('iq_qty').value,
+    note: document.getElementById('iq_note').value,
+    time: new Date().toLocaleString('en-US'), status: 'Pending'
+  });
+  document.getElementById('inquiryAlert').innerHTML = '<div class="alert alert-success">✅ Inquiry sent! We\'ll be in touch shortly.</div>';
+  setTimeout(() => { document.getElementById('inquiryAlert').innerHTML = ''; closeModal('inquiryModal'); }, 2000);
+}
+
+// ══════════════════════════════════════════
+//  ADMIN PANEL
+// ══════════════════════════════════════════
+function showAdmin(section, el) {
+  if (el) {
+    document.querySelectorAll('.admin-nav-item').forEach(i => i.classList.remove('active'));
+    el.classList.add('active');
+  }
+  renderAdminSection(section);
+}
+
+function renderAdminSection(section) {
+  const c = document.getElementById('adminContent');
+  if (!c) return;
+
+  if (section === 'dashboard') {
+    const active = appData.products.filter(p => p.status).length;
+    c.innerHTML = `
+      <div class="admin-header"><div class="admin-title">Dashboard</div></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:36px">
+        <div class="stat-card"><div class="num">${appData.products.length}</div><div class="lbl">Total Products</div></div>
+        <div class="stat-card"><div class="num">${active}</div><div class="lbl">Active Listings</div></div>
+        <div class="stat-card"><div class="num">${appData.brands.length}</div><div class="lbl">Partner Brands</div></div>
+        <div class="stat-card"><div class="num">${appData.inquiries.length}</div><div class="lbl">Total Inquiries</div></div>
+      </div>
+      <div style="font-size:16px;font-weight:700;margin-bottom:18px">Recent Inquiries</div>
+      ${appData.inquiries.length === 0 ? '<div style="color:var(--text2);font-size:14px;padding:20px;background:var(--card);border:1px solid var(--border);border-radius:10px;">No inquiries yet.</div>' :
+        appData.inquiries.slice(-6).reverse().map(q => `
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+            <div><span style="font-weight:700">${q.company || q.contact}</span><span style="font-size:13px;color:var(--text2);margin-left:12px">${q.model}</span><span style="font-size:12px;color:var(--text2);margin-left:8px">· ${q.phone || q.email || ''}</span></div>
+            <div style="display:flex;gap:10px;align-items:center"><span style="font-size:12px;color:var(--text3)">${q.time}</span><span class="tag ${q.status === 'Completed' ? 'tag-active' : 'tag-active'}">${q.status}</span></div>
+          </div>`).join('')}`;
+
+  } else if (section === 'products') {
+    c.innerHTML = `
+      <div class="admin-header">
+        <div class="admin-title">Products</div>
+        <button class="btn btn-primary" onclick="showAdmin('addProduct',document.querySelectorAll('.admin-nav-item')[2])">+ Add Product</button>
+      </div>
+      ${appData.products.map(p => `
+        <div class="admin-product-row">
+          <div class="admin-product-thumb">${p.emoji || '🤖'}</div>
+          <div class="admin-product-info">
+            <div class="admin-product-name">${p.name}</div>
+            <div class="admin-product-meta">Daily ¥${p.price_day.toLocaleString()} · Monthly ¥${p.price_month.toLocaleString()} · ${p.specs['DoF'] || '—'} DoF · ${p.specs['Payload'] || '—'} payload</div>
+          </div>
+          <span class="tag ${p.status ? 'tag-active' : 'tag-inactive'}" style="margin-right:6px">${p.status ? 'Active' : 'Inactive'}</span>
+          <div class="admin-actions">
+            <button class="btn btn-ghost btn-sm" onclick="editProduct(${p.id})">Edit</button>
+            <button class="btn btn-danger btn-sm" onclick="toggleStatus(${p.id})">${p.status ? 'Deactivate' : 'Activate'}</button>
+          </div>
+        </div>`).join('')}`;
+
+  } else if (section === 'addProduct' || section === 'editProduct') {
+    const p = editingId ? appData.products.find(x => x.id === editingId) : null;
+    const brands = [...new Set([...appData.products.map(x => x.brand), ...appData.brands.map(b => b.name)])].filter((v, i, a) => a.indexOf(v) === i);
+    c.innerHTML = `
+      <div class="admin-header"><div class="admin-title">${p ? 'Edit Product' : 'Add New Product'}</div></div>
+      <div id="adminAlert"></div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:32px;max-width:720px">
+        <div class="form-row">
+          <div class="form-group"><label>Brand</label>
+            <select id="ap_brand">${brands.map(b => `<option ${p && p.brand === b ? 'selected' : ''}>${b}</option>`).join('')}</select>
+          </div>
+          <div class="form-group"><label>Model Code</label><input id="ap_model" type="text" value="${p ? p.model : ''}" placeholder="e.g. U2, EVO-X1"></div>
+        </div>
+        <div class="form-group" style="margin-bottom:14px"><label>Full Product Name</label><input id="ap_name" type="text" value="${p ? p.name : ''}" placeholder="Brand + Model Name"></div>
+        <div class="form-group" style="margin-bottom:14px"><label>Description</label><textarea id="ap_desc" rows="3">${p ? p.desc : ''}</textarea></div>
+        <div class="form-row">
+          <div class="form-group"><label>Daily Rate (¥)</label><input id="ap_day" type="number" value="${p ? p.price_day : ''}" placeholder="3800"></div>
+          <div class="form-group"><label>Monthly Rate (¥)</label><input id="ap_month" type="number" value="${p ? p.price_month : ''}" placeholder="88000"></div>
+        </div>
+        <div class="divider"></div>
+        <div style="font-size:12px;font-weight:700;letter-spacing:0.8px;color:var(--text2);margin-bottom:18px;text-transform:uppercase">Technical Specifications</div>
+        <div class="form-row">
+          <div class="form-group"><label>Height</label><input id="ap_height" type="text" value="${p ? p.specs['Height'] || '' : ''}" placeholder="~180cm"></div>
+          <div class="form-group"><label>Weight</label><input id="ap_weight" type="text" value="${p ? p.specs['Weight'] || '' : ''}" placeholder="~65kg"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Degrees of Freedom</label><input id="ap_dof" type="text" value="${p ? p.specs['DoF'] || '' : ''}" placeholder="27"></div>
+          <div class="form-group"><label>Payload Capacity</label><input id="ap_load" type="text" value="${p ? p.specs['Payload'] || '' : ''}" placeholder="≥15kg"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Battery Life</label><input id="ap_bat" type="text" value="${p ? p.specs['Battery'] || '' : ''}" placeholder="~2hrs"></div>
+          <div class="form-group"><label>Protection Rating</label><input id="ap_ip" type="text" value="${p ? p.specs['Protection'] || '' : ''}" placeholder="IP54"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Badge / Label</label>
+            <select id="ap_badge">
+              <option value="" ${p && !p.badge ? 'selected' : ''}>None</option>
+              <option value="Popular" ${p && p.badge === 'Popular' ? 'selected' : ''}>Popular</option>
+              <option value="New" ${p && p.badge === 'New' ? 'selected' : ''}>New</option>
+              <option value="Featured" ${p && p.badge === 'Featured' ? 'selected' : ''}>Featured</option>
+              <option value="Flagship" ${p && p.badge === 'Flagship' ? 'selected' : ''}>Flagship</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Emoji Icon</label><input id="ap_emoji" type="text" value="${p ? p.emoji || '🤖' : '🤖'}" placeholder="🤖"></div>
+        </div>
+        <div style="display:flex;gap:12px;margin-top:28px">
+          <button class="btn btn-success btn-large" style="flex:1" onclick="saveProduct()">${p ? 'Save Changes' : 'Publish Product'}</button>
+          <button class="btn btn-ghost" style="padding:14px 22px" onclick="editingId=null;showAdmin('products',document.querySelectorAll('.admin-nav-item')[1])">Cancel</button>
+        </div>
+      </div>`;
+
+  } else if (section === 'brands') {
+    c.innerHTML = `
+      <div class="admin-header"><div class="admin-title">Brand Management</div></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px">
+        ${appData.brands.map((b, i) => `
+          <div class="admin-card" style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px">
+            <div style="font-size:36px;margin-bottom:10px">${b.emoji}</div>
+            <div style="font-weight:800;font-size:16px;margin-bottom:3px">${b.name}</div>
+            <div style="font-size:12px;color:var(--text2);margin-bottom:10px">${b.fullname}</div>
+            <div style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:14px">${b.desc}</div>
+            <button class="btn btn-ghost btn-sm" onclick="editBrandInline(${i})">Edit Description</button>
+          </div>`).join('')}
+      </div>`;
+
+  } else if (section === 'inquiries') {
+    c.innerHTML = `
+      <div class="admin-header"><div class="admin-title">Inquiries (${appData.inquiries.length})</div></div>
+      ${appData.inquiries.length === 0 ? '<div style="color:var(--text2);padding:24px;background:var(--card);border:1px solid var(--border);border-radius:10px;">No inquiries received yet.</div>' :
+        [...appData.inquiries].reverse().map(q => `
+          <div class="admin-product-row">
+            <div class="admin-product-info">
+              <div class="admin-product-name">${q.company || q.contact} <span style="font-weight:400;color:var(--text2)">· ${q.phone || q.email || '—'}</span></div>
+              <div class="admin-product-meta">Model: ${q.model} · Qty: ${q.qty || 1} · ${q.period || ''} · ${q.time}</div>
+              ${q.scene || q.note ? `<div style="font-size:13px;color:var(--text2);margin-top:5px">${q.scene || q.note}</div>` : ''}
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;flex-shrink:0">
+              <span class="tag ${q.status === 'Completed' ? 'tag-active' : 'tag-active'}">${q.status}</span>
+              <button class="btn btn-ghost btn-sm" onclick="markDone(${q.id})">Mark Done</button>
+            </div>
+          </div>`).join('')}`;
+  }
+}
+
+function editProduct(id) {
+  editingId = id;
+  showAdmin('editProduct', document.querySelectorAll('.admin-nav-item')[2]);
+}
+
+function toggleStatus(id) {
+  const p = appData.products.find(x => x.id === id);
+  if (p) p.status = !p.status;
+  renderAdminSection('products');
+}
+
+function saveProduct() {
+  const brand = document.getElementById('ap_brand').value;
+  const model = document.getElementById('ap_model').value;
+  const name = document.getElementById('ap_name').value.trim();
+  const desc = document.getElementById('ap_desc').value.trim();
+  const day = parseInt(document.getElementById('ap_day').value) || 0;
+  const month = parseInt(document.getElementById('ap_month').value) || 0;
+  if (!brand || !name || !day) {
+    const a = document.getElementById('adminAlert');
+    if (a) a.innerHTML = '<div class="alert alert-error">Please fill in brand, name, and daily rate.</div>';
+    return;
+  }
+  const specs = {
+    'Height': document.getElementById('ap_height').value,
+    'Weight': document.getElementById('ap_weight').value,
+    'DoF': document.getElementById('ap_dof').value,
+    'Payload': document.getElementById('ap_load').value,
+    'Battery': document.getElementById('ap_bat').value,
+    'Protection': document.getElementById('ap_ip').value,
+  };
+  const badge = document.getElementById('ap_badge').value;
+  const emoji = document.getElementById('ap_emoji').value;
+  if (editingId) {
+    const p = appData.products.find(x => x.id === editingId);
+    Object.assign(p, { brand, model, name, desc, price_day: day, price_month: month, specs, badge, emoji });
+  } else {
+    appData.products.push({ id: appData.nextId++, brand, model, name, desc, price_day: day, price_month: month, specs, badge, emoji, status: true });
+  }
+  editingId = null;
+  const a = document.getElementById('adminAlert');
+  if (a) a.innerHTML = '<div class="alert alert-success">✅ Product saved successfully.</div>';
+  setTimeout(() => showAdmin('products', document.querySelectorAll('.admin-nav-item')[1]), 1200);
+}
+
+function markDone(id) {
+  const q = appData.inquiries.find(x => x.id === id);
+  if (q) q.status = 'Completed';
+  renderAdminSection('inquiries');
+}
+
+function editBrandInline(idx) {
+  const b = appData.brands[idx];
+  const newDesc = prompt(`Edit brand description for ${b.name}:`, b.desc);
+  if (newDesc !== null) b.desc = newDesc;
+  renderAdminSection('brands');
+}
+
+// ══════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════
+renderFeatured();
+renderContactSelects();
+renderInquirySelects(null);
+updateStats();
+
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', function(e) { if (e.target === this) this.classList.remove('show'); });
+});
+document.getElementById('mainFooter').style.display = 'block';
+</script>
+</body>
+</html>
